@@ -119,3 +119,5 @@ unset __conda_setup
 
 source /home/herculano/Dev/z/z.sh
 alias dotfiles='/usr/bin/git --git-dir=/home/herculano/.dotfiles/ --work-tree=/home/herculano'
+
+alias smpptest='sh $HOME/Dev/acert/smpp.sh'
