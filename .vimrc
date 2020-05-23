@@ -79,9 +79,11 @@ NeoBundle 'vim-python/python-syntax'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'valloric/youcompleteme'
 NeoBundle 'powerline/powerline'
-NeoBundle 'restore_view.vim'
+" NeoBundle 'restore_view.vim'
 NeoBundle 'chrisbra/vim-commentary'
 NeoBundle 'nvie/vim-flake8'
+NeoBundle 'reedes/vim-colors-pencil'
+
 
 autocmd BufWritePost *.py call Flake8()
 

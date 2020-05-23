@@ -2,10 +2,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/bin:$HOME/.local/bin:$PATH
 export ZSH="/home/herculano/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_AUTO_UPDATE="true"
+
+powerline-daemon -q
+source /home/herculano/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # Uncomment the following line to automatically update without prompting.
 DISABLE_UPDATE_PROMPT="true"
@@ -71,33 +74,31 @@ fi
 alias peteleco="/home/herculano/Dev/acert/peteleco.sh"
 
 # Example aliases 
+
 alias zshconfig="vim ~/.zshrc" 
 #alias ohmyzsh="vim ~/.oh-my-zsh"
 #### MY ALIASES ##
 alias pacman="sudo pacman"
 alias updatedb="sudo updatedb"
-
 alias ls='ls --color=auto'
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
 alias v='vim'
 alias touchpad='sudo vim /etc/X11/xorg.conf.d/30-touchpad.conf'
-
 alias docker='sudo docker'
 alias docker-compose='sudo docker-compose'
-
 alias sc='systemctl'
-
 alias zshreload='source $HOME/.zshrc'
-
 alias dkc='docker-compose'
-
 alias i3config='vim $HOME/.config/i3/config'
-
 alias reboot='sudo reboot'
-
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias smpptest='sh $HOME/Dev/acert/smpp.sh'
+alias kubectl='sudo kubectl'
+alias barreiro_vpn='openvpn --config /home/herculano/Downloads/barreiro.tls.key &'
+alias vimrc="vim ~/.vimrc"
+alias dotfiles='/usr/bin/git --git-dir=/home/herculano/.dotfiles/ --work-tree=/home/herculano'
 
 
 source /usr/share/nvm/init-nvm.sh
@@ -118,6 +119,11 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 source /home/herculano/Dev/z/z.sh
-alias dotfiles='/usr/bin/git --git-dir=/home/herculano/.dotfiles/ --work-tree=/home/herculano'
 
-alias smpptest='sh $HOME/Dev/acert/smpp.sh'
+
+export DENO_INSTALL="/home/herculano/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+source /home/herculano/.local/bin/activate.sh
+
+
