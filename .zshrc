@@ -1,7 +1,6 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-# If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:/usr/bin:$HOME/.local/bin:$PATH
 export ZSH="/home/herculano/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -10,12 +9,10 @@ DISABLE_AUTO_UPDATE="true"
 powerline-daemon -q
 source /home/herculano/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
-# Uncomment the following line to automatically update without prompting.
 DISABLE_UPDATE_PROMPT="true"
 
 export UPDATE_ZSH_DAYS=3
 
-# Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
@@ -31,19 +28,12 @@ export UPDATE_ZSH_DAYS=3
 # see 'man strftime' for details.
 HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages)
+plugins=(git colored-man-pages zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
 
 export MANPATH="/usr/local/man:$MANPATH"
 
@@ -96,9 +86,17 @@ alias reboot='sudo reboot'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias smpptest='sh $HOME/Dev/acert/smpp.sh'
 alias kubectl='sudo kubectl'
-alias barreiro_vpn='openvpn --config /home/herculano/Downloads/barreiro.tls.key &'
+alias barreiro_vpn='sudo openvpn --config /home/herculano/Downloads/barreiro.tls.key &'
 alias vimrc="vim ~/.vimrc"
 alias dotfiles='/usr/bin/git --git-dir=/home/herculano/.dotfiles/ --work-tree=/home/herculano'
+alias gs='git status'
+alias gp='git pull'
+alias gb='git branch'
+alias ga='git add .'
+alias gc='git commit -m $1'
+alias gpo='git push origin $1'
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
 
 
 source /usr/share/nvm/init-nvm.sh
