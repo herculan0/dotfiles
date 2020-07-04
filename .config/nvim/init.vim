@@ -1,5 +1,5 @@
 " Ambiente virtual python para o NeoVim
-let g:python3_host_prog = '$HOME/.config/nvim/venv/bin/python'
+let g:python3_host_prog = expand('$HOME/.config/nvim/venv/bin/python')
 
 " Instalação de Plugins com o Plug
 " https://github.com/junegunn/vim-plug
@@ -18,6 +18,12 @@ let g:deoplete#enable_at_startup = 1
 
 " Usar tab para navegar no deoplete
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set smarttab
 
 " Configurações de Interface
 let g:gruvbox_contrast_dark = 'hard'
