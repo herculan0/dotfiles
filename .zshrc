@@ -2,12 +2,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 export PATH=$HOME/bin:/usr/local/bin:/usr/bin:$HOME/.local/bin:$PATH
-export ZSH="/home/herculano/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_AUTO_UPDATE="true"
 
 powerline-daemon -q
-source /home/herculano/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+source $HOME/.local/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
 DISABLE_UPDATE_PROMPT="true"
 
@@ -44,7 +44,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 # Compilation flags
@@ -61,11 +61,10 @@ fi
 
 ##### ACERT COMMANDS #####
 ## limpar falhas nas teiqs ##
-alias peteleco="/home/herculano/Dev/acert/peteleco.sh"
-
+alias peteleco="$HOME/Dev/acert/peteleco.sh"
+alias cryptos='curl rate.sx'
 # Example aliases 
-
-alias zshconfig="vim ~/.zshrc" 
+alias @zsh="vim ~/.zshrc" 
 #alias ohmyzsh="vim ~/.oh-my-zsh"
 #### MY ALIASES ##
 alias pacman="sudo pacman"
@@ -74,6 +73,7 @@ alias ls='ls --color=auto'
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
+alias vim='nvim'
 alias v='vim'
 alias touchpad='sudo vim /etc/X11/xorg.conf.d/30-touchpad.conf'
 alias docker='sudo docker'
@@ -86,9 +86,9 @@ alias reboot='sudo reboot'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias smpptest='sh $HOME/Dev/acert/smpp.sh'
 alias kubectl='sudo kubectl'
-alias barreiro_vpn='sudo openvpn --config /home/herculano/Downloads/barreiro.tls.key &'
-alias vimrc="vim ~/.vimrc"
-alias dotfiles='/usr/bin/git --git-dir=/home/herculano/.dotfiles/ --work-tree=/home/herculano'
+alias barreiro_vpn='sudo openvpn --config $HOME/Downloads/barreiro.tls.key &'
+alias @vrc="vim ~/.vimrc"
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gs='git status'
 alias gp='git pull'
 alias gb='git branch'
@@ -97,31 +97,76 @@ alias gc='git commit -m $1'
 alias gpo='git push origin $1'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
+# alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
+alias lsd='ls -d */'
+alias @nvim='v ~/.config/nvim/init.vim'
 
 
 source /usr/share/nvm/init-nvm.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/herculano/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/herculano/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/herculano/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/herculano/miniconda3/bin:$PATH"
+        export PATH="$HOME/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-source /home/herculano/Dev/z/z.sh
+source $HOME/Dev/z/z.sh
 
 
-export DENO_INSTALL="/home/herculano/.deno"
+export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+export PATH=~/rofi-translate:$PATH
 
-source /home/herculano/.local/bin/activate.sh
+source $HOME/.local/bin/activate.sh
 
 
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+
+export PYTHONSTARTUP=~/.pythonrc
+### End of Zinit's installer chunk
+### End of Zinit's installer chunk
+#
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma/fast-syntax-highlighting
+
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
