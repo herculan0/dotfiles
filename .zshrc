@@ -1,7 +1,11 @@
+# zmodload zsh/zprof # top of your .zshrc file
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 export PATH=$HOME/bin:/usr/local/bin:/usr/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/.config/composer/vendor/bin:$PATH
+export PATH=$HOME/Dev/tools:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_AUTO_UPDATE="true"
@@ -27,10 +31,12 @@ export UPDATE_ZSH_DAYS=3
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="mm/dd/yyyy"
+HISTSIZE=10000000
+SAVEHIST=10000000
 
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# ZSH_CUSTOM=$HOME/.config/zsh_custom
 
-plugins=(git colored-man-pages zsh-completions)
+plugins=(git colored-man-pages zsh-completions aws mongodb minikube)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -55,58 +61,15 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-
+source ~/.config/zsh_custom/.zsh_aliases
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-##### ACERT COMMANDS #####
-## limpar falhas nas teiqs ##
-alias peteleco="$HOME/Dev/acert/peteleco.sh"
-alias cryptos='curl rate.sx'
-# Example aliases 
-alias @zsh="vim ~/.zshrc" 
-#alias ohmyzsh="vim ~/.oh-my-zsh"
-#### MY ALIASES ##
-alias pacman="sudo pacman"
-alias updatedb="sudo updatedb"
-alias ls='ls --color=auto'
-alias grep='grep --colour=auto'
-alias egrep='egrep --colour=auto'
-alias fgrep='fgrep --colour=auto'
-alias vim='nvim'
-alias v='vim'
-alias touchpad='sudo vim /etc/X11/xorg.conf.d/30-touchpad.conf'
-alias docker='sudo docker'
-alias docker-compose='sudo docker-compose'
-alias sc='systemctl'
-alias zshreload='source $HOME/.zshrc'
-alias dkc='docker-compose'
-alias i3config='vim $HOME/.config/i3/config'
-alias reboot='sudo reboot'
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias smpptest='sh $HOME/Dev/acert/smpp.sh'
-alias kubectl='sudo kubectl'
-alias barreiro_vpn='sudo openvpn --config $HOME/Downloads/barreiro.tls.key &'
-alias @vrc="vim ~/.vimrc"
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias gs='git status'
-alias gp='git pull'
-alias gb='git branch'
-alias ga='git add .'
-alias gc='git commit -m $1'
-alias gpo='git push origin $1'
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
-# alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
-alias lsd='ls -d */'
-alias @nvim='v ~/.config/nvim/init.vim'
-
-
-source /usr/share/nvm/init-nvm.sh
+# source /usr/share/nvm/init-nvm.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# __conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -122,10 +85,8 @@ unset __conda_setup
 source $HOME/Dev/z/z.sh
 
 
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH=~/rofi-translate:$PATH
-
+export PATH=~/.npm-global/bin:$PATH
 source $HOME/.local/bin/activate.sh
 
 
@@ -168,5 +129,17 @@ pasteinit() {
 pastefinish() {
   zle -N self-insert $OLD_SELF_INSERT
 }
+
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
+
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+# zprof
